@@ -21,9 +21,11 @@ from sklearn.preprocessing import scale
 # у которого признаки записаны в поле data, а целевой вектор — в поле target.
 streetData = load_boston();
 
+print(streetData.target)
 # Приведите признаки в выборке к одному масштабу при помощи функции sklearn.preprocessing.scale
 scaledData = scale(streetData.data)
 
+print(scaledData)
 # Переберите разные варианты параметра метрики p по сетке от 1 до 10 с таким шагом,
 # чтобы всего было протестировано 200 вариантов (используйте функцию numpy.linspace).
 steps = np.linspace(start=1, stop=10, num=200)
