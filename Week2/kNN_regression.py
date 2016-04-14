@@ -31,20 +31,24 @@ steps = np.linspace(start=1, stop=10, num=200)
 # Качество оценивайте, как и в предыдущем задании, с помощью кросс-валидации по 5 блокам с random_state = 42,
 # не забудьте включить перемешивание выборки (shuffle=True).
 kf = KFold(len(streetData.target), shuffle=True, n_folds=5, random_state=42)
-
 result = np.empty(len(steps))
+
 for x in range(0, len(steps)):
     # Используйте KNeighborsRegressor с n_neighbors=5
     # и weights='distance' — данный параметр добавляет в алгоритм веса, зависящие от расстояния до ближайших соседей.
     neigh = KNeighborsRegressor(n_neighbors=5, weights='distance', p=steps[x], metric='minkowski')
     # В качестве метрики качества используйте среднеквадратичную ошибку
     # ( параметр scoring='mean_squared_error' у cross_val_score).
+
     scores = cross_val_score(neigh, X=scaledData, y=streetData.target, scoring='mean_squared_error', cv=kf)
-    print("KNeighbors: %d " % x)
-    print(scores)
-    print(np.mean(scores))
+#    print("p %0.5f" % steps[x])
+#    print("KNeighbors: %d " % x)
+#    print(scores)
+#    print(np.mean(scores))
     result[x] = (np.mean(scores))
 
 resultValue = result[np.argmax(result)]
+
 print("max item %d" % np.argmax(result))
+print("max p %0.5f" % steps[np.argmax(result)])
 print("max value %0.5f" % resultValue)
